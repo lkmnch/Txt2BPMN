@@ -1,0 +1,15 @@
+{
+  "name": "text-to-bpmn",
+  "version": "1.0.0",
+  "description": "This is a Tool to generate bpmn-diagrams from business process descriptions with the help of LLMs",
+  "main": "validate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@prettier/plugin-xml": "^3.4.1",
+    "prettier": "^3.3.0"
+  }
+}

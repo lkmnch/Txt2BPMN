@@ -1,0 +1,63 @@
+{
+	"processName": "Order Fulfillment",
+	"processDescription": "The process of fulfilling a customer order from receipt to delivery.",
+	"participants": [
+		"Customer",
+		"Sales Representative",
+		"Warehouse Staff",
+		"Delivery Driver"
+	],
+	"startEvent": {
+		"description": "The process starts when a customer places an order."
+	},
+	"tasks": [
+		{
+			"taskName": "Receive Order",
+			"description": "Sales Representative receives the order from the customer.",
+			"participant": "Sales Representative",
+			"conditions": []
+		},
+		{
+			"taskName": "Check Inventory",
+			"description": "Sales Representative checks if the items are in stock.",
+			"participant": "Sales Representative",
+			"conditions": ["Order details must be available"]
+		},
+		{
+			"taskName": "Pack Order",
+			"description": "Warehouse Staff packs the items.",
+			"participant": "Warehouse Staff",
+			"conditions": []
+		},
+		{
+			"taskName": "Ship Order",
+			"description": "Delivery Driver ships the order to the customer.",
+			"participant": "Delivery Driver",
+			"conditions": []
+		}
+	],
+	"gateways": [
+		{
+			"gatewayName": "Inventory Check",
+			"condition": "If items are in stock, proceed to Pack Order. If not, notify customer and cancel the order."
+		}
+	],
+	"intermediateEvents": [
+		{
+			"eventName": "Order Update Notification",
+			"description": "Notify the customer about the order status after packing."
+		}
+	],
+	"endEvent": {
+		"description": "The process ends when the customer receives the order."
+	},
+	"sequenceFlow": [
+		"Start Event -> Receive Order",
+		"Receive Order -> Check Inventory",
+		"Check Inventory -> Pack Order (if items are in stock)",
+		"Check Inventory -> Notify Customer and End (if items are not in stock)",
+		"Pack Order -> Ship Order",
+		"Ship Order -> End Event"
+	],
+	"additionalInformation": "The process should include notification steps for any delays or issues encountered."
+}

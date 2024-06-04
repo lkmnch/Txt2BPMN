@@ -1,0 +1,35 @@
+{
+	"processName": "",
+	"processDescription": "",
+	"participants": [""],
+	"startEvent": {
+		"description": ""
+	},
+	"tasks": [
+		{
+			"taskName": "",
+			"description": "",
+			"participant": "",
+			"conditions": []
+		}
+	],
+	"gateways": [
+		{
+			"gatewayName": "",
+			"type": "",
+			"condition": ""
+		}
+	],
+	"intermediateEvents": [
+		{
+			"eventName": "",
+			"description": ""
+		}
+	],
+	"endEvent": {
+		"description": ""
+	},
+	"sequenceFlow": [],
+	"messageFlow": [],
+	"additionalInformation": ""
+}

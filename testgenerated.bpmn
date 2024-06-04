@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             id="Definitions_1"
+             targetNamespace="http://www.example.org/bpmn">
+  <process id="process_1" isExecutable="true">
+    <startEvent id="startEvent_1" name="Start">
+      <outgoing>flow_1</outgoing>
+    </startEvent>
+    <task id="task_1" name="Perform Feasibility Check">
+      <incoming>flow_1</incoming>
+      <outgoing>flow_2</outgoing>
+    </task>
+    <exclusiveGateway id="gateway_1" name="Feasibility Check?">
+      <incoming>flow_2</incoming>
+      <outgoing>flow_3</outgoing>
+      <outgoing>flow_4</outgoing>
+    </exclusiveGateway>
+    <task id="task_2" name="Inform Customer">
+      <incoming>flow_3</incoming>
+      <outgoing>flow_5</outgoing>
+    </task>
+    <endEvent id="endEvent_1" name="End">
+      <incoming>flow_5</incoming>
+    </endEvent>
+    <sequenceFlow id="flow_1" sourceRef="startEvent_1" targetRef="task_1"/>
+    <sequenceFlow id="flow_2" sourceRef="task_1" targetRef="gateway_1"/>
+    <sequenceFlow id="flow_3" name="Not Feasible" sourceRef="gateway_1" targetRef="task_2"/>
+    <sequenceFlow id="flow_4" name="Feasible" sourceRef="gateway_1" targetRef="task_3"/>
+    <task id="task_3" name="Check Personnel Needs & Availability">
+      <incoming>flow_4</incoming>
+      <outgoing>flow_6</outgoing>
+    </task>
+    <sequenceFlow id="flow_6" sourceRef="task_3" targetRef="task_4"/>
+    <task id="task_4" name="Create Offer">
+      <incoming>flow_6</incoming>
+      <outgoing>flow_7</outgoing>
+    </task>
+    <endEvent id="endEvent_2" name="End">
+      <incoming>flow_7</incoming>
+    </endEvent>
+    <sequenceFlow id="flow_7" sourceRef="task_4" targetRef="endEvent_2"/>
+    <sequenceFlow id="flow_5" sourceRef="task_2" targetRef="endEvent_1"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
+      <bpmndi:BPMNShape id="startEvent_1_di" bpmnElement="startEvent_1">
+        <dc:Bounds x="100" y="100" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task_1_di" bpmnElement="task_1">
+        <dc:Bounds x="200" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gateway_1_di" bpmnElement="gateway_1">
+        <dc:Bounds x="350" y="95" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task_2_di" bpmnElement="task_2">
+        <dc:Bounds x="450" y="60" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_1_di" bpmnElement="endEvent_1">
+        <dc:Bounds x="600" y="100" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task_3_di" bpmnElement="task_3">
+        <dc:Bounds x="450" y="180" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task_4_di" bpmnElement="task_4">
+        <dc:Bounds x="650" y="180" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_2_di" bpmnElement="endEvent_2">
+        <dc:Bounds x="800" y="220" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="flow_1_di" bpmnElement="flow_1">
+        <di:waypoint x="136" y="118"/>
+        <di:waypoint x="200" y="118"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_2_di" bpmnElement="flow_2">
+        <di:waypoint x="300" y="118"/>
+        <di:waypoint x="350" y="118"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_3_di" bpmnElement="flow_3">
+        <di:waypoint x="400" y="118"/>
+        <di:waypoint x="450" y="100"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_4_di" bpmnElement="flow_4">
+        <di:waypoint x="400" y="145"/>
+        <di:waypoint x="450" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_6_di" bpmnElement="flow_6">
+        <di:waypoint x="600" y="220"/>
+        <di:waypoint x="650" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_7_di" bpmnElement="flow_7">
+        <di:waypoint x="750" y="220"/>
+        <di:waypoint x="800" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="flow_5_di" bpmnElement="flow_5">
+        <di:waypoint x="550" y="100"/>
+        <di:waypoint x="600" y="118"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
