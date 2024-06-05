@@ -1,0 +1,14 @@
+{
+	"task": "You are tasked with generating a BPMN XML file based on a provided text-based description of a business process. The BPMN 2.0 specification defines the structure and syntax of BPMN models, which are represented in XML format using XSD schema files.",
+	"xsdFiles": [
+		"BPMN20.xsd",
+		"BPMNDI20.xsd",
+		"DC.xsd",
+		"DI.xsd",
+		"Semantic.xsd"
+	],
+	"instructions": "Please refer to these XSD schema files for guidance on the structure and syntax of BPMN elements and attributes. Your task is to interpret the process description and generate a valid BPMN XML file that adheres to the BPMN 2.0 specification. Please generate the necessary XML code to populate each BPMN element based on the provided process description. Ensure that the generated BPMN XML file adheres to the structure and constraints defined in the BPMN XSD schema.",
+	"clarification": "Feel free to ask for clarification or additional information as needed. Once all information has been provided, generate the BPMN XML file based on the input.",
+
+	"business_process": "a) An offer is required to be done by the sales department of a specific company. At this point, the commercial manager has to perform a feasibility check based on the business requirements & needs to ensure that the offer is feasible. b) If the offer is not feasible, the customer has to be informed and at this point the process ends after informing him. c) If the offer is feasible, the personnel needs & availability has to be checked. After clarifying the availability based on the business resources, the offer has to be created by the commercial employee and the process ends at creating the offer."
+}
