@@ -10,6 +10,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import { Languages, CircleHelp, Ghost } from "lucide-react"
+import ProcessForm from "@/components/ProcessForm"
 
 export default function Home() {
 	return (
@@ -34,13 +35,7 @@ export default function Home() {
 						</Button>
 					</div>
 				</header>
-				<div className='flex flex-col gap-3'>
-					<Input placeholder='Prozessname'></Input>
-					<Textarea
-						placeholder='Prozessbeschreibung eingeben'
-						rows={15}></Textarea>
-					<Button>generieren</Button>
-				</div>
+				<ProcessForm />
 				<div className='flex mt-4 bg-slate-100 w-full h-96 rounded-md items-center justify-center'>
 					<p>BPMN Diagramm Vorschau</p>
 				</div>
