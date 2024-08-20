@@ -8,6 +8,8 @@ const openai = new OpenAI()
 
 export async function POST(request: NextRequest) {
 	const { processDescription, processName } = await request.json()
+	console.log("🚀 ~ POST ~ processDescription:", processDescription)
+
 	const bpmnXml = await generateBpmnFromDescription(
 		processDescription,
 		processName
@@ -38,7 +40,7 @@ async function generateBpmnFromDescription(
 		})
 		console.log(completion.choices[0])
 		const bpmnXml = jsonToBpmn(completion.choices[0])
-		fs.writeFileSync("process.bpmn", bpmnXml)
+		fs.writeFileSync("public/process.bpmn", bpmnXml)
 
 		console.log("BPMN XML file generated successfully.")
 		return bpmnXml
@@ -88,7 +90,7 @@ function jsonToBpmn(jsonData: any): string {
 				id: `Shape_${start_event.id}`,
 				bpmnElement: start_event.id,
 			})
-			.ele("dc:Bounds", { x: 100, y: 100, width: 36, height: 36 })
+			.ele("dc:Bounds", { x: 100, y: 200, width: 36, height: 36 })
 	})
 
 	// Tasks
@@ -105,8 +107,8 @@ function jsonToBpmn(jsonData: any): string {
 			.ele("dc:Bounds", {
 				x: 200 + index * 100,
 				y: 200,
-				width: 100,
-				height: 80,
+				width: 80,
+				height: 50,
 			})
 	})
 
@@ -135,7 +137,7 @@ function jsonToBpmn(jsonData: any): string {
 				id: `Shape_${end_event.id}`,
 				bpmnElement: end_event.id,
 			})
-			.ele("dc:Bounds", { x: 400, y: 400, width: 36, height: 36 })
+			.ele("dc:Bounds", { x: 800, y: 200, width: 36, height: 36 })
 	})
 
 	// Sequence Flows

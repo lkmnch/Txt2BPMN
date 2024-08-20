@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -11,8 +12,11 @@ import {
 } from "@/components/ui/select"
 import { Languages, CircleHelp, Ghost } from "lucide-react"
 import ProcessForm from "@/components/ProcessForm"
+import { useState } from "react"
+import BpmnCanvas from "@/components/BpmnCanvas"
 
 export default function Home() {
+	const [bpmnXml, setBpmnXml] = useState<string>("")
 	return (
 		<main className='flex flex-col min-h-screen container'>
 			<div className='flex-grow'>
@@ -35,17 +39,16 @@ export default function Home() {
 						</Button>
 					</div>
 				</header>
-				<ProcessForm />
-				<div className='flex mt-4 bg-slate-100 w-full h-96 rounded-md items-center justify-center'>
-					<p>BPMN Diagramm Vorschau</p>
-				</div>
+				<ProcessForm setBpmnXml={setBpmnXml} />
+
+				<BpmnCanvas bpmnXML={bpmnXml} />
 				<div className=' mt-4 flex gap-2 justify-end'>
 					<Button>speichern</Button>
 					<Button>exportieren</Button>
 				</div>
 			</div>
 			<footer className=' flex justify-center'>
-				<p>Made by Loukmane Chaou</p>
+				<p>Made by lkmnch</p>
 			</footer>
 		</main>
 	)

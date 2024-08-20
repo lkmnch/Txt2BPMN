@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:startEvent id="startEvent1" name="Start Booking Process"/>
+    <bpmn:task id="task1" name="Search Flight"/>
+    <bpmn:task id="task2" name="Select Flight"/>
+    <bpmn:task id="task3" name="Enter Passenger Details"/>
+    <bpmn:task id="task4" name="Provide Payment Information"/>
+    <bpmn:task id="task5" name="Confirm Booking"/>
+    <bpmn:task id="task6" name="Send Confirmation Email"/>
+    <bpmn:exclusiveGateway id="gateway1" name="Flight Search Results"/>
+    <bpmn:exclusiveGateway id="gateway2" name="Payment Needed?"/>
+    <bpmn:parallelGateway id="gateway3" name="End of Booking Process"/>
+    <bpmn:endEvent id="endEvent1" name="End Booking Process"/>
+    <bpmn:sequenceFlow id="Flow_startEvent1_task1" sourceRef="startEvent1" targetRef="task1"/>
+    <bpmn:sequenceFlow id="Flow_task1_gateway1" sourceRef="task1" targetRef="gateway1"/>
+    <bpmn:sequenceFlow id="Flow_gateway1_task2" sourceRef="gateway1" targetRef="task2"/>
+    <bpmn:sequenceFlow id="Flow_task2_task3" sourceRef="task2" targetRef="task3"/>
+    <bpmn:sequenceFlow id="Flow_task3_gateway2" sourceRef="task3" targetRef="gateway2"/>
+    <bpmn:sequenceFlow id="Flow_gateway2_task4" sourceRef="gateway2" targetRef="task4"/>
+    <bpmn:sequenceFlow id="Flow_gateway2_task5" sourceRef="gateway2" targetRef="task5"/>
+    <bpmn:sequenceFlow id="Flow_task4_task5" sourceRef="task4" targetRef="task5"/>
+    <bpmn:sequenceFlow id="Flow_task5_task6" sourceRef="task5" targetRef="task6"/>
+    <bpmn:sequenceFlow id="Flow_task6_gateway3" sourceRef="task6" targetRef="gateway3"/>
+    <bpmn:sequenceFlow id="Flow_gateway3_endEvent1" sourceRef="gateway3" targetRef="endEvent1"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Shape_startEvent1" bpmnElement="startEvent1">
+        <dc:Bounds x="100" y="200" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_task1" bpmnElement="task1">
+        <dc:Bounds x="200" y="200" width="80" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_task2" bpmnElement="task2">
+        <dc:Bounds x="300" y="200" width="80" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_task3" bpmnElement="task3">
+        <dc:Bounds x="400" y="200" width="80" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_task4" bpmnElement="task4">
+        <dc:Bounds x="500" y="200" width="80" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_task5" bpmnElement="task5">
+        <dc:Bounds x="600" y="200" width="80" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_task6" bpmnElement="task6">
+        <dc:Bounds x="700" y="200" width="80" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_gateway1" bpmnElement="gateway1">
+        <dc:Bounds x="300" y="300" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_gateway2" bpmnElement="gateway2">
+        <dc:Bounds x="400" y="300" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_gateway3" bpmnElement="gateway3">
+        <dc:Bounds x="500" y="300" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_endEvent1" bpmnElement="endEvent1">
+        <dc:Bounds x="800" y="200" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_startEvent1_task1" bpmnElement="Flow_startEvent1_task1">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_task1_gateway1" bpmnElement="Flow_task1_gateway1">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_gateway1_task2" bpmnElement="Flow_gateway1_task2">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_task2_task3" bpmnElement="Flow_task2_task3">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_task3_gateway2" bpmnElement="Flow_task3_gateway2">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_gateway2_task4" bpmnElement="Flow_gateway2_task4">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_gateway2_task5" bpmnElement="Flow_gateway2_task5">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_task4_task5" bpmnElement="Flow_task4_task5">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_task5_task6" bpmnElement="Flow_task5_task6">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_task6_gateway3" bpmnElement="Flow_task6_gateway3">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_gateway3_endEvent1" bpmnElement="Flow_gateway3_endEvent1">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,137 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:process id="Process_1" isExecutable="true">
-    <bpmn:startEvent id="startEvent1" name="Goods to ship"/>
-    <bpmn:task id="task1" name="Decide mode of delivery"/>
-    <bpmn:task id="task2" name="Package the goods"/>
-    <bpmn:task id="task3" name="Request quotes from carriers"/>
-    <bpmn:task id="task4" name="Assign a carrier"/>
-    <bpmn:task id="task5" name="Prepare paperwork for special shipment"/>
-    <bpmn:task id="task6" name="Check if extra insurance is necessary"/>
-    <bpmn:task id="task7" name="Take out extra insurance"/>
-    <bpmn:task id="task8" name="Fill in a postal label"/>
-    <bpmn:task id="task9" name="Add paperwork and move package to pick area"/>
-    <bpmn:ExclusiveGateway id="gateway1" name="Mode of delivery"/>
-    <bpmn:InclusiveGateway id="gateway2" name="Check extra insurance"/>
-    <bpmn:ParallelGateway id="gateway3" name="Synchronizing gateway"/>
-    <bpmn:endEvent id="endEvent1" name="Goods available for pick"/>
-    <bpmn:sequenceFlow id="Flow_startEvent1_gateway1" sourceRef="startEvent1" targetRef="gateway1"/>
-    <bpmn:sequenceFlow id="Flow_gateway1_task1" sourceRef="gateway1" targetRef="task1"/>
-    <bpmn:sequenceFlow id="Flow_gateway1_task2" sourceRef="gateway1" targetRef="task2"/>
-    <bpmn:sequenceFlow id="Flow_task1_gateway2" sourceRef="task1" targetRef="gateway2"/>
-    <bpmn:sequenceFlow id="Flow_gateway2_task3" sourceRef="gateway2" targetRef="task3"/>
-    <bpmn:sequenceFlow id="Flow_gateway2_task6" sourceRef="gateway2" targetRef="task6"/>
-    <bpmn:sequenceFlow id="Flow_task3_task4" sourceRef="task3" targetRef="task4"/>
-    <bpmn:sequenceFlow id="Flow_task4_task5" sourceRef="task4" targetRef="task5"/>
-    <bpmn:sequenceFlow id="Flow_task6_task7" sourceRef="task6" targetRef="task7"/>
-    <bpmn:sequenceFlow id="Flow_task7_gateway2" sourceRef="task7" targetRef="gateway2"/>
-    <bpmn:sequenceFlow id="Flow_task8_gateway3" sourceRef="task8" targetRef="gateway3"/>
-    <bpmn:sequenceFlow id="Flow_task5_gateway3" sourceRef="task5" targetRef="gateway3"/>
-    <bpmn:sequenceFlow id="Flow_gateway3_task9" sourceRef="gateway3" targetRef="task9"/>
-    <bpmn:sequenceFlow id="Flow_task2_gateway3" sourceRef="task2" targetRef="gateway3"/>
-    <bpmn:sequenceFlow id="Flow_gateway3_endEvent1" sourceRef="gateway3" targetRef="endEvent1"/>
+    <bpmn:startEvent id="e1" name="Goods to ship"/>
+    <bpmn:task id="t1" name="Clerk decides mode of delivery"/>
+    <bpmn:task id="t2" name="Warehouse worker packages goods"/>
+    <bpmn:task id="t3" name="Request quotes from carriers"/>
+    <bpmn:task id="t4" name="Assign a carrier"/>
+    <bpmn:task id="t5" name="Prepare paperwork"/>
+    <bpmn:task id="t6" name="Check if extra insurance is necessary"/>
+    <bpmn:task id="t7" name="Logistics manager takes out extra insurance"/>
+    <bpmn:task id="t8" name="Fill in a postal label"/>
+    <bpmn:task id="t9" name="Add paperwork and move package to pick area"/>
+    <bpmn:exclusiveGateway id="g1" name="Mode of delivery"/>
+    <bpmn:inclusiveGateway id="g2" name="Check extra insurance"/>
+    <bpmn:parallelGateway id="g3" name="Synchronizing parallel gateway"/>
+    <bpmn:parallelGateway id="g4" name="Synchronizing parallel gateway"/>
+    <bpmn:endEvent id="e2" name="Goods available for pick"/>
+    <bpmn:sequenceFlow id="Flow_e1_g1" sourceRef="e1" targetRef="g1"/>
+    <bpmn:sequenceFlow id="Flow_g1_t3" sourceRef="g1" targetRef="t3"/>
+    <bpmn:sequenceFlow id="Flow_g1_t6" sourceRef="g1" targetRef="t6"/>
+    <bpmn:sequenceFlow id="Flow_g1_t8" sourceRef="g1" targetRef="t8"/>
+    <bpmn:sequenceFlow id="Flow_t2_g1" sourceRef="t2" targetRef="g1"/>
+    <bpmn:sequenceFlow id="Flow_t3_t4" sourceRef="t3" targetRef="t4"/>
+    <bpmn:sequenceFlow id="Flow_t4_t5" sourceRef="t4" targetRef="t5"/>
+    <bpmn:sequenceFlow id="Flow_t5_g4" sourceRef="t5" targetRef="g4"/>
+    <bpmn:sequenceFlow id="Flow_t6_g2" sourceRef="t6" targetRef="g2"/>
+    <bpmn:sequenceFlow id="Flow_g2_t7" sourceRef="g2" targetRef="t7"/>
+    <bpmn:sequenceFlow id="Flow_t7_g4" sourceRef="t7" targetRef="g4"/>
+    <bpmn:sequenceFlow id="Flow_g4_t8" sourceRef="g4" targetRef="t8"/>
+    <bpmn:sequenceFlow id="Flow_g4_g3" sourceRef="g4" targetRef="g3"/>
+    <bpmn:sequenceFlow id="Flow_t8_g3" sourceRef="t8" targetRef="g3"/>
+    <bpmn:sequenceFlow id="Flow_g3_t9" sourceRef="g3" targetRef="t9"/>
+    <bpmn:sequenceFlow id="Flow_t9_e2" sourceRef="t9" targetRef="e2"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="Shape_startEvent1" bpmnElement="startEvent1">
+      <bpmndi:BPMNShape id="Shape_e1" bpmnElement="e1">
         <dc:Bounds x="100" y="100" width="36" height="36"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task1" bpmnElement="task1">
+      <bpmndi:BPMNShape id="Shape_t1" bpmnElement="t1">
         <dc:Bounds x="200" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task2" bpmnElement="task2">
+      <bpmndi:BPMNShape id="Shape_t2" bpmnElement="t2">
         <dc:Bounds x="300" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task3" bpmnElement="task3">
+      <bpmndi:BPMNShape id="Shape_t3" bpmnElement="t3">
         <dc:Bounds x="400" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task4" bpmnElement="task4">
+      <bpmndi:BPMNShape id="Shape_t4" bpmnElement="t4">
         <dc:Bounds x="500" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task5" bpmnElement="task5">
+      <bpmndi:BPMNShape id="Shape_t5" bpmnElement="t5">
         <dc:Bounds x="600" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task6" bpmnElement="task6">
+      <bpmndi:BPMNShape id="Shape_t6" bpmnElement="t6">
         <dc:Bounds x="700" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task7" bpmnElement="task7">
+      <bpmndi:BPMNShape id="Shape_t7" bpmnElement="t7">
         <dc:Bounds x="800" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task8" bpmnElement="task8">
+      <bpmndi:BPMNShape id="Shape_t8" bpmnElement="t8">
         <dc:Bounds x="900" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task9" bpmnElement="task9">
+      <bpmndi:BPMNShape id="Shape_t9" bpmnElement="t9">
         <dc:Bounds x="1000" y="200" width="100" height="80"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_gateway1" bpmnElement="gateway1">
+      <bpmndi:BPMNShape id="Shape_g1" bpmnElement="g1">
         <dc:Bounds x="300" y="300" width="50" height="50"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_gateway2" bpmnElement="gateway2">
+      <bpmndi:BPMNShape id="Shape_g2" bpmnElement="g2">
         <dc:Bounds x="400" y="300" width="50" height="50"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_gateway3" bpmnElement="gateway3">
+      <bpmndi:BPMNShape id="Shape_g3" bpmnElement="g3">
         <dc:Bounds x="500" y="300" width="50" height="50"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_endEvent1" bpmnElement="endEvent1">
+      <bpmndi:BPMNShape id="Shape_g4" bpmnElement="g4">
+        <dc:Bounds x="600" y="300" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_e2" bpmnElement="e2">
         <dc:Bounds x="400" y="400" width="36" height="36"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Edge_startEvent1_gateway1" bpmnElement="Flow_startEvent1_gateway1">
+      <bpmndi:BPMNEdge id="Edge_e1_g1" bpmnElement="Flow_e1_g1">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_gateway1_task1" bpmnElement="Flow_gateway1_task1">
+      <bpmndi:BPMNEdge id="Edge_g1_t3" bpmnElement="Flow_g1_t3">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_gateway1_task2" bpmnElement="Flow_gateway1_task2">
+      <bpmndi:BPMNEdge id="Edge_g1_t6" bpmnElement="Flow_g1_t6">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task1_gateway2" bpmnElement="Flow_task1_gateway2">
+      <bpmndi:BPMNEdge id="Edge_g1_t8" bpmnElement="Flow_g1_t8">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_gateway2_task3" bpmnElement="Flow_gateway2_task3">
+      <bpmndi:BPMNEdge id="Edge_t2_g1" bpmnElement="Flow_t2_g1">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_gateway2_task6" bpmnElement="Flow_gateway2_task6">
+      <bpmndi:BPMNEdge id="Edge_t3_t4" bpmnElement="Flow_t3_t4">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task3_task4" bpmnElement="Flow_task3_task4">
+      <bpmndi:BPMNEdge id="Edge_t4_t5" bpmnElement="Flow_t4_t5">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task4_task5" bpmnElement="Flow_task4_task5">
+      <bpmndi:BPMNEdge id="Edge_t5_g4" bpmnElement="Flow_t5_g4">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task6_task7" bpmnElement="Flow_task6_task7">
+      <bpmndi:BPMNEdge id="Edge_t6_g2" bpmnElement="Flow_t6_g2">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task7_gateway2" bpmnElement="Flow_task7_gateway2">
+      <bpmndi:BPMNEdge id="Edge_g2_t7" bpmnElement="Flow_g2_t7">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task8_gateway3" bpmnElement="Flow_task8_gateway3">
+      <bpmndi:BPMNEdge id="Edge_t7_g4" bpmnElement="Flow_t7_g4">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task5_gateway3" bpmnElement="Flow_task5_gateway3">
+      <bpmndi:BPMNEdge id="Edge_g4_t8" bpmnElement="Flow_g4_t8">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_gateway3_task9" bpmnElement="Flow_gateway3_task9">
+      <bpmndi:BPMNEdge id="Edge_g4_g3" bpmnElement="Flow_g4_g3">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_task2_gateway3" bpmnElement="Flow_task2_gateway3">
+      <bpmndi:BPMNEdge id="Edge_t8_g3" bpmnElement="Flow_t8_g3">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_gateway3_endEvent1" bpmnElement="Flow_gateway3_endEvent1">
+      <bpmndi:BPMNEdge id="Edge_g3_t9" bpmnElement="Flow_g3_t9">
+        <di:waypoint x="100" y="100"/>
+        <di:waypoint x="200" y="200"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_t9_e2" bpmnElement="Flow_t9_e2">
         <di:waypoint x="100" y="100"/>
         <di:waypoint x="200" y="200"/>
       </bpmndi:BPMNEdge>

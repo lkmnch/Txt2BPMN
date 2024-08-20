@@ -1,16 +1,20 @@
 "use client"
-import React, { FormEvent, useState } from "react"
+import React, { Dispatch, FormEvent, SetStateAction, useState } from "react"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button"
 import { Loader2 } from "lucide-react"
 
-function ProcessForm() {
+type ProcessFormProps = {
+	setBpmnXml: Dispatch<SetStateAction<string>>
+}
+function ProcessForm({ setBpmnXml }: ProcessFormProps) {
 	const [processName, setProcessName] = useState<string>("")
 	const [processDescription, setProcessDescription] = useState<string>("")
 	const [loading, setLoading] = useState<boolean>(false)
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		setBpmnXml("")
 		setLoading(true)
 		try {
 			e.preventDefault()
@@ -23,6 +27,7 @@ function ProcessForm() {
 			})
 			const data = await response.text()
 			console.log(data)
+			setBpmnXml(data)
 		} catch (error) {
 			console.log("🚀 ~ handleSubmit ~ error:", error)
 		} finally {
