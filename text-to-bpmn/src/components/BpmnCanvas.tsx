@@ -1,6 +1,12 @@
 "use client"
 import React, { useEffect, useRef } from "react"
 import BpmnViewer from "bpmn-js/lib/Viewer"
+import BpmnModeler from "bpmn-js/lib/Modeler"
+
+import "bpmn-js/dist/assets/diagram-js.css"
+import "bpmn-js/dist/assets/bpmn-js.css"
+
+import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css"
 
 type BpmnCanvas = {
 	bpmnXML: string
@@ -21,16 +27,22 @@ function BpmnCanvas({ bpmnXML }: BpmnCanvas) {
 	useEffect(() => {
 		// create a modeler
 		if (divRef.current) {
-			const viewer = new BpmnViewer({ container: divRef.current })
-			viewerRef.current = viewer
+			const modeler = new BpmnModeler({
+				container: divRef.current,
+				keyboard: {
+					bindTo: window,
+				},
+			})
+			viewerRef.current = modeler
 
 			if (bpmnXML.length !== 0) {
 				const importDiagramm = async () => {
 					console.log("BPMN XML:", bpmnXML) // Log the XML to check content
 					// import diagram
 					try {
-						await viewer.importXML(bpmnXML)
-						const canvas = viewer.get("canvas") as Canvas
+						await modeler.importXML(bpmnXML)
+						const canvas = modeler.get("canvas") as Canvas
+
 						canvas.zoom("fit-viewport")
 					} catch (err) {
 						console.log("🚀 ~ importDiagramm ~ err:", err)
@@ -49,7 +61,7 @@ function BpmnCanvas({ bpmnXML }: BpmnCanvas) {
 		<div
 			id='canvas'
 			ref={divRef}
-			className='h-96 bg-slate-400 rounded-lg mt-5 '
+			className='h-96 bg-slate-100 rounded-lg mt-5 '
 		/>
 	)
 }

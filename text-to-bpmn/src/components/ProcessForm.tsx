@@ -40,26 +40,32 @@ function ProcessForm({ setBpmnXml }: ProcessFormProps) {
 			className='flex flex-col gap-3'
 			onSubmit={handleSubmit}>
 			<Input
+				className=' font-medium text-xl'
 				name='processName'
 				value={processName}
 				onChange={(e) => setProcessName(e.target.value)}
-				placeholder='Prozessname'
+				placeholder='process name'
 			/>
 			<Textarea
+				className=' font-medium text-xl'
 				name='processDescription'
 				value={processDescription}
 				onChange={(e) => setProcessDescription(e.target.value)}
-				placeholder='Prozessbeschreibung eingeben'
+				placeholder='process description'
 				rows={15}
 			/>
-			<Button name='submitButton' type='submit' disabled={loading}>
+			<Button
+				className=' font-medium text-xl'
+				name='submitButton'
+				type='submit'
+				disabled={loading}>
 				{loading ? (
 					<>
 						<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-						Bitte warten{" "}
+						Please wait{" "}
 					</>
 				) : (
-					"generieren"
+					"generate"
 				)}
 			</Button>
 		</form>

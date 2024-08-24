@@ -10,7 +10,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { Languages, CircleHelp, Ghost } from "lucide-react"
+import {
+	Languages,
+	CircleHelp,
+	Ghost,
+	SaveIcon,
+	FolderDown,
+} from "lucide-react"
 import ProcessForm from "@/components/ProcessForm"
 import { useState } from "react"
 import BpmnCanvas from "@/components/BpmnCanvas"
@@ -43,8 +49,14 @@ export default function Home() {
 
 				<BpmnCanvas bpmnXML={bpmnXml} />
 				<div className=' mt-4 flex gap-2 justify-end'>
-					<Button>speichern</Button>
-					<Button>exportieren</Button>
+					<Button className=' font-medium text-xl'>
+						<SaveIcon className='mr-2' />
+						save
+					</Button>
+					<Button className=' font-medium text-xl'>
+						{" "}
+						<FolderDown className='mr-2' /> export
+					</Button>
 				</div>
 			</div>
 			<footer className=' flex justify-center'>
