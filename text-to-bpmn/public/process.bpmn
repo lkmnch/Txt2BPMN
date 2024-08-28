@@ -1,43 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:process id="Process_1" isExecutable="false">
-    <bpmn:startEvent id="start_event_1" name="Start"/>
-    <bpmn:task id="task_1" name="Go in shop"/>
-    <bpmn:task id="task_2" name="Select pizza"/>
-    <bpmn:task id="task_3" name="Pay pizza"/>
-    <bpmn:task id="task_4" name="Eat pizza"/>
-    <bpmn:task id="task_5" name="Leave shop"/>
-    <bpmn:endEvent id="end_event_1" name="End"/>
-    <bpmn:sequenceFlow id="Flow_start_event_1_task_1" sourceRef="start_event_1" targetRef="task_1"/>
-    <bpmn:sequenceFlow id="Flow_task_1_task_2" sourceRef="task_1" targetRef="task_2"/>
-    <bpmn:sequenceFlow id="Flow_task_2_task_3" sourceRef="task_2" targetRef="task_3"/>
-    <bpmn:sequenceFlow id="Flow_task_3_task_4" sourceRef="task_3" targetRef="task_4"/>
-    <bpmn:sequenceFlow id="Flow_task_4_task_5" sourceRef="task_4" targetRef="task_5"/>
-    <bpmn:sequenceFlow id="Flow_task_5_end_event_1" sourceRef="task_5" targetRef="end_event_1"/>
+    <bpmn:startEvent id="start_1" name="Order Received"/>
+    <bpmn:task id="task_1" name="Verify Order Details"/>
+    <bpmn:task id="task_2" name="Process Order"/>
+    <bpmn:task id="task_3" name="Ship Order"/>
+    <bpmn:task id="task_4" name="Update Inventory"/>
+    <bpmn:task id="task_5" name="Inform Customer about Problem"/>
+    <bpmn:task id="task_6" name="Mark Order as Finished"/>
+    <bpmn:exclusiveGateway id="gateway_1" name="Order Validity Check"/>
+    <bpmn:parallelGateway id="gateway_2" name="Completion Check"/>
+    <bpmn:endEvent id="end_1" name="Order Processed Successfully"/>
+    <bpmn:endEvent id="end_2" name="Customer Notified"/>
+    <bpmn:sequenceFlow id="flow_1" sourceRef="start_1" targetRef="task_1"/>
+    <bpmn:sequenceFlow id="flow_2" sourceRef="task_1" targetRef="gateway_1"/>
+    <bpmn:sequenceFlow id="flow_3" sourceRef="gateway_1" targetRef="task_2"/>
+    <bpmn:sequenceFlow id="flow_4" sourceRef="gateway_1" targetRef="task_5"/>
+    <bpmn:sequenceFlow id="flow_5" sourceRef="task_2" targetRef="gateway_2"/>
+    <bpmn:sequenceFlow id="flow_6" sourceRef="gateway_2" targetRef="task_3"/>
+    <bpmn:sequenceFlow id="flow_7" sourceRef="gateway_2" targetRef="task_4"/>
+    <bpmn:sequenceFlow id="flow_8" sourceRef="task_3" targetRef="end_1"/>
+    <bpmn:sequenceFlow id="flow_9" sourceRef="task_4" targetRef="end_1"/>
+    <bpmn:sequenceFlow id="flow_10" sourceRef="task_5" targetRef="end_2"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="Shape_start_event_1" bpmnElement="start_event_1">
-        <dc:Bounds x="0" y="0" width="36" height="36"/>
+      <bpmndi:BPMNShape id="shape_start_1" bpmnElement="start_1">
+        <dc:Bounds x="50" y="100" width="30" height="30"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task_1" bpmnElement="task_1">
-        <dc:Bounds x="100" y="0" width="100" height="80"/>
+      <bpmndi:BPMNShape id="shape_task_1" bpmnElement="task_1">
+        <dc:Bounds x="150" y="100" width="60" height="30"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task_2" bpmnElement="task_2">
-        <dc:Bounds x="200" y="0" width="100" height="80"/>
+      <bpmndi:BPMNShape id="shape_gateway_1" bpmnElement="gateway_1">
+        <dc:Bounds x="250" y="100" width="40" height="40"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task_3" bpmnElement="task_3">
-        <dc:Bounds x="300" y="0" width="100" height="80"/>
+      <bpmndi:BPMNShape id="shape_task_2" bpmnElement="task_2">
+        <dc:Bounds x="350" y="50" width="60" height="30"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task_4" bpmnElement="task_4">
-        <dc:Bounds x="400" y="0" width="100" height="80"/>
+      <bpmndi:BPMNShape id="shape_task_3" bpmnElement="task_3">
+        <dc:Bounds x="350" y="150" width="60" height="30"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_task_5" bpmnElement="task_5">
-        <dc:Bounds x="500" y="0" width="100" height="80"/>
+      <bpmndi:BPMNShape id="shape_end_1" bpmnElement="end_1">
+        <dc:Bounds x="450" y="100" width="30" height="30"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_end_event_1" bpmnElement="end_event_1">
-        <dc:Bounds x="600" y="0" width="36" height="36"/>
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_flow_1" bpmnElement="flow_1">
+        <di:waypoint x="80" y="115"/>
+        <di:waypoint x="150" y="115"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_2" bpmnElement="flow_2">
+        <di:waypoint x="210" y="115"/>
+        <di:waypoint x="250" y="115"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_3" bpmnElement="flow_3">
+        <di:waypoint x="290" y="115"/>
+        <di:waypoint x="350" y="115"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_4" bpmnElement="flow_4">
+        <di:waypoint x="400" y="115"/>
+        <di:waypoint x="450" y="115"/>
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
