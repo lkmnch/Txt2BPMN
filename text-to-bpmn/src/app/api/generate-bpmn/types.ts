@@ -3,7 +3,7 @@ type process = {
 	gateways: gateway[]
 	start_events: start_event[]
 	end_events: end_event[]
-	sequence_flows?: sequence_flow[]
+	sequence_flows: sequence_flow[]
 }
 
 type start_event = {

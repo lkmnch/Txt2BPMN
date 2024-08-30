@@ -22,40 +22,72 @@ export function jsonToBpmn(jsonProcess: process, jsonLayout: any): string {
 		isExecutable: "false",
 	})
 	// Create BPMN Diagram
-	const bpmnDiagram = root.ele("bpmndi:BPMNDiagram", { id: "BPMNDiagram_1" })
-	const bpmnPlane = bpmnDiagram.ele("bpmndi:BPMNPlane", {
-		id: "BPMNPlane_1",
-		bpmnElement: "Process_1",
-	})
+	// const bpmnDiagram = root.ele("bpmndi:BPMNDiagram", { id: "BPMNDiagram_1" })
+	// const bpmnPlane = bpmnDiagram.ele("bpmndi:BPMNPlane", {
+	// 	id: "BPMNPlane_1",
+	// 	bpmnElement: "Process_1",
+	// })
 	// Start Event
 	jsonProcess.start_events.forEach((start_event: start_event) => {
-		bpmnProcess.ele("bpmn:startEvent", {
+		const start_eventElement = bpmnProcess.ele("bpmn:startEvent", {
 			id: start_event.id,
 			name: start_event.name,
+		})
+		jsonProcess.sequence_flows.forEach((flow: any) => {
+			if (flow.sourceRef === start_event.id) {
+				start_eventElement.ele("bpmn:outgoing").txt(flow.id)
+			}
+			if (flow.targetRef === start_event.id) {
+				start_eventElement.ele("bpmn:incoming").txt(flow.id)
+			}
 		})
 	})
 
 	// Tasks
 	jsonProcess.tasks.forEach((task: any) => {
-		bpmnProcess.ele("bpmn:task", {
+		const taskElement = bpmnProcess.ele("bpmn:task", {
 			id: task.id,
 			name: task.name,
+		})
+		jsonProcess.sequence_flows.forEach((flow: any) => {
+			if (flow.sourceRef === task.id) {
+				taskElement.ele("bpmn:outgoing").txt(flow.id)
+			}
+			if (flow.targetRef === task.id) {
+				taskElement.ele("bpmn:incoming").txt(flow.id)
+			}
 		})
 	})
 
 	// Gateways
 	jsonProcess.gateways.forEach((gateway: gateway) => {
-		bpmnProcess.ele(`bpmn:${gateway.type}`, {
+		const gatewayElement = bpmnProcess.ele(`bpmn:${gateway.type}`, {
 			id: gateway.id,
 			name: gateway.name,
+		})
+		jsonProcess.sequence_flows.forEach((flow: any) => {
+			if (flow.sourceRef === gateway.id) {
+				gatewayElement.ele("bpmn:outgoing").txt(flow.id)
+			}
+			if (flow.targetRef === gateway.id) {
+				gatewayElement.ele("bpmn:incoming").txt(flow.id)
+			}
 		})
 	})
 
 	// End Event
 	jsonProcess.end_events.forEach((end_event: any) => {
-		bpmnProcess.ele("bpmn:endEvent", {
+		const end_eventElement = bpmnProcess.ele("bpmn:endEvent", {
 			id: end_event.id,
 			name: end_event.name,
+		})
+		jsonProcess.sequence_flows.forEach((flow: any) => {
+			if (flow.sourceRef === end_event.id) {
+				end_eventElement.ele("bpmn:outgoing").txt(flow.id)
+			}
+			if (flow.targetRef === end_event.id) {
+				end_eventElement.ele("bpmn:incoming").txt(flow.id)
+			}
 		})
 	})
 
@@ -68,31 +100,6 @@ export function jsonToBpmn(jsonProcess: process, jsonLayout: any): string {
 				targetRef: flow.targetRef,
 			})
 		})
-	jsonLayout.shapes.forEach((shape: any) => {
-		bpmnPlane
-			.ele("bpmndi:BPMNShape", {
-				id: shape.id,
-				bpmnElement: shape.bpmnElement,
-			})
-			.ele("dc:Bounds", {
-				x: shape.bounds.x,
-				y: shape.bounds.y,
-				width: shape.bounds.width,
-				height: shape.bounds.height,
-			})
-	})
-	jsonLayout.edges.forEach((edge: any) => {
-		const bpmnEdge = bpmnPlane.ele("bpmndi:BPMNEdge", {
-			id: edge.id,
-			bpmnElement: edge.bpmnElement,
-		})
-		edge.waypoints.forEach((waypoint: any) => {
-			bpmnEdge.ele("di:waypoint", {
-				x: waypoint.x,
-				y: waypoint.y,
-			})
-		})
-	})
 
 	return root.end({ prettyPrint: true })
 }
