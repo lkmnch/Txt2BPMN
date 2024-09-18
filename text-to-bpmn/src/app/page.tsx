@@ -1,8 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import Image from "next/image"
+
 import {
 	Select,
 	SelectContent,
@@ -11,57 +10,129 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import {
-	Languages,
-	CircleHelp,
-	Ghost,
-	SaveIcon,
-	FolderDown,
-} from "lucide-react"
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet"
+
+import { FolderDown } from "lucide-react"
 import ProcessForm from "@/components/ProcessForm"
 import { useState } from "react"
 import BpmnCanvas from "@/components/BpmnCanvas"
+import Image from "next/image"
+import { Label } from "@/components/ui/label"
 
 export default function Home() {
 	const [bpmnXml, setBpmnXml] = useState<string>("")
-	return (
-		<main className='flex flex-col min-h-screen container'>
-			<div className='flex-grow'>
-				<header className='mt-5 mb-5 flex justify-between '>
-					<h1 className='scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
-						txt-2-bpmn
-					</h1>
-					<div className='flex gap-2'>
-						<Select>
-							<SelectTrigger className='w-fit'>
-								<SelectValue placeholder={<Languages />} />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value='german'>Deutsch</SelectItem>
-								<SelectItem value='english'>English</SelectItem>
-							</SelectContent>
-						</Select>
-						<Button variant='ghost'>
-							<CircleHelp />
-						</Button>
-					</div>
-				</header>
-				<ProcessForm setBpmnXml={setBpmnXml} />
+	const [fileFormat, setFileFormat] = useState<string>("")
+	const [diagramName, setDiagramName] = useState<string>("")
+	const [diagramAsSvg, setDiagramAsSvg] = useState<string>()
 
-				<BpmnCanvas bpmnXML={bpmnXml} />
-				<div className=' mt-4 flex gap-2 justify-end'>
-					<Button className=' font-medium text-xl'>
-						<SaveIcon className='mr-2' />
-						save
-					</Button>
-					<Button className=' font-medium text-xl'>
-						{" "}
-						<FolderDown className='mr-2' /> export
-					</Button>
+	function downloadDiagram() {
+		if (fileFormat === "xml") {
+			const element = document.createElement("a")
+			const file = new Blob([bpmnXml], { type: "text/xml" })
+			element.href = URL.createObjectURL(file)
+			element.download = `${diagramName}.bpmn`
+			document.body.appendChild(element) // Required for this to work in FireFox
+			element.click()
+		}
+		if (fileFormat === "svg" && diagramAsSvg) {
+			const element = document.createElement("a")
+			//const file = new Blob([diagramAsSvg], { type: "image/svg" })
+			var encodedData = encodeURIComponent(diagramAsSvg)
+			element.href = "data:application/bpmn20-xml;charset=UTF-8," + encodedData
+			element.download = `${diagramName}.svg`
+			document.body.appendChild(element) // Required for this to work in FireFox
+			element.click()
+		}
+	}
+	return (
+		<>
+			<header className=' top-0 bg-slate-100'>
+				<div className='container p-2 flex justify-center items-baseline'>
+					<h1 className='scroll-m-20 text-2xl font-bold tracking-tight lg:text-3xl'>
+						Txt2BPMN
+					</h1>
 				</div>
-			</div>
+			</header>
+			<main className=' bg-slate-50 '>
+				<div className='flex flex-col min-h-screen container pt-5'>
+					<div className='flex-grow'>
+						<ProcessForm setBpmnXml={setBpmnXml} />
+						{bpmnXml ? (
+							<>
+								<BpmnCanvas
+									bpmnXML={bpmnXml}
+									setDiagramAsSvg={setDiagramAsSvg}></BpmnCanvas>
+								<div className=' mt-4 flex gap-2 justify-end'>
+									<Sheet>
+										<SheetTrigger asChild>
+											<Button className=' font-medium text-xl'>
+												{" "}
+												<FolderDown className='mr-2' /> Export
+											</Button>
+										</SheetTrigger>
+										<SheetContent>
+											<SheetHeader>
+												<SheetTitle>Download BPMN Diagram</SheetTitle>
+											</SheetHeader>
+											<div className='flex flex-col gap-4'>
+												<div>
+													<Label htmlFor='digramName'>Name</Label>
+													<Input
+														id='digramName'
+														value={diagramName}
+														onChange={(value) =>
+															setDiagramName(value.target.value)
+														}
+													/>
+												</div>
+												<div>
+													<Label htmlFor='fileFormat'>File Format</Label>
+													<Select
+														onValueChange={(value) => setFileFormat(value)}>
+														<SelectTrigger id='fileFormat'>
+															<SelectValue placeholder='File Format' />
+														</SelectTrigger>
+														<SelectContent position='popper'>
+															<SelectItem value='xml'>XML</SelectItem>
+															<SelectItem value='svg'>SVG</SelectItem>
+														</SelectContent>
+													</Select>
+												</div>
+
+												<Button onClick={() => downloadDiagram()}>
+													Download
+												</Button>
+											</div>
+										</SheetContent>
+									</Sheet>
+								</div>
+							</>
+						) : (
+							<div className='flex justify-center items-center h-[400px]'>
+								<div className='flex flex-col items-center gap-1'>
+									<Image
+										src='bpmnSVG.svg'
+										alt='empty'
+										width={200}
+										height={200}
+									/>
+
+									<p className='text-2xl font-bold'>No BPMN diagram to show</p>
+									<p className='text-lg'>Create a diagram above </p>
+								</div>
+							</div>
+						)}
+					</div>
+				</div>
+			</main>
 			<footer className=' flex justify-center'>
 				<p>Made by lkmnch</p>
 			</footer>
-		</main>
+		</>
 	)
 }

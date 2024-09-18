@@ -9,38 +9,22 @@ type process = {
 type start_event = {
 	id: string
 	name: string
-	// start_x?: number
-	// start_y?: number
-	// end_x?: number
-	// end_y?: number
 }
 
 type task = {
 	id: string
 	name: string
-	// start_x: number
-	// start_y: number
-	// end_x: number
-	// end_y: number
 }
 
 type gateway = {
 	id: string
 	name: string
 	type: string
-	// start_x: number
-	// start_y: number
-	// end_x: number
-	// end_y: number
 }
 
 type end_event = {
 	id: string
 	name: string
-	// start_x: number
-	// start_y: number
-	// end_x: number
-	// end_y: number
 }
 
 type sequence_flow = {

@@ -1,7 +1,7 @@
 import { json } from "stream/consumers"
 import { create } from "xmlbuilder2"
 
-export function jsonToBpmn(jsonProcess: process, jsonLayout: any): string {
+export function jsonToBpmn(jsonProcess: process): string {
 	// Create the root element
 	const root = create({ version: "1.0", encoding: "UTF-8" }).ele(
 		"bpmn:definitions",
@@ -21,12 +21,7 @@ export function jsonToBpmn(jsonProcess: process, jsonLayout: any): string {
 		id: "Process_1",
 		isExecutable: "false",
 	})
-	// Create BPMN Diagram
-	// const bpmnDiagram = root.ele("bpmndi:BPMNDiagram", { id: "BPMNDiagram_1" })
-	// const bpmnPlane = bpmnDiagram.ele("bpmndi:BPMNPlane", {
-	// 	id: "BPMNPlane_1",
-	// 	bpmnElement: "Process_1",
-	// })
+
 	// Start Event
 	jsonProcess.start_events.forEach((start_event: start_event) => {
 		const start_eventElement = bpmnProcess.ele("bpmn:startEvent", {
@@ -98,6 +93,7 @@ export function jsonToBpmn(jsonProcess: process, jsonLayout: any): string {
 				id: flow.id,
 				sourceRef: flow.sourceRef,
 				targetRef: flow.targetRef,
+				name: flow.name,
 			})
 		})
 

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react"
 import BpmnViewer from "bpmn-js/lib/Viewer"
 import BpmnModeler from "bpmn-js/lib/Modeler"
 
@@ -10,6 +10,7 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css"
 
 type BpmnCanvas = {
 	bpmnXML: string
+	setDiagramAsSvg: Dispatch<SetStateAction<string | undefined>>
 }
 
 interface Canvas {
@@ -20,7 +21,7 @@ interface Canvas {
 	// Add other methods as needed
 }
 
-function BpmnCanvas({ bpmnXML }: BpmnCanvas) {
+function BpmnCanvas({ bpmnXML, setDiagramAsSvg }: BpmnCanvas) {
 	const divRef = useRef<HTMLDivElement>(null)
 	const viewerRef = useRef<BpmnViewer | null>(null)
 
@@ -42,8 +43,9 @@ function BpmnCanvas({ bpmnXML }: BpmnCanvas) {
 					try {
 						await modeler.importXML(bpmnXML)
 						const canvas = modeler.get("canvas") as Canvas
-
 						canvas.zoom("fit-viewport")
+						const { svg } = await modeler.saveSVG()
+						setDiagramAsSvg(svg)
 					} catch (err) {
 						console.log("🚀 ~ importDiagramm ~ err:", err)
 					}
@@ -51,6 +53,7 @@ function BpmnCanvas({ bpmnXML }: BpmnCanvas) {
 				importDiagramm()
 			}
 		}
+
 		// Cleanup
 		return () => {
 			viewerRef.current?.destroy()
@@ -61,8 +64,7 @@ function BpmnCanvas({ bpmnXML }: BpmnCanvas) {
 		<div
 			id='canvas'
 			ref={divRef}
-			className='h-96 bg-slate-100 rounded-lg mt-5 '
-		/>
+			className='h-[600px] bg-white rounded-lg mt-5 shadow-sm border border-input '></div>
 	)
 }
 
