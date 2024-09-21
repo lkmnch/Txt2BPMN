@@ -13,7 +13,7 @@ docker pull ghcr.io/lkmnch/text2bpmn:latest
 ```
 2. Run the container and provide your OpenAI API key as an environment variable:
 ```
-docker run -e OPENAI_API_KEY=your-api-key -p 3000:3000 ghcr.io/lkmnch/text2bpmn:latest
+docker run -e OPENAI_API_KEY={your-api-key} -p 3000:3000 ghcr.io/lkmnch/text2bpmn:latest
 ```
 3. Access the app in your browser at http://localhost:3000.
 
