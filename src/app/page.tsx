@@ -23,32 +23,44 @@ import { useState } from "react"
 import BpmnCanvas from "@/components/BpmnCanvas"
 import Image from "next/image"
 import { Label } from "@/components/ui/label"
+import BpmnModeler from "bpmn-js/lib/Modeler"
 
 export default function Home() {
 	const [bpmnXml, setBpmnXml] = useState<string>("")
 	const [fileFormat, setFileFormat] = useState<string>("")
 	const [diagramName, setDiagramName] = useState<string>("")
-	const [diagramAsSvg, setDiagramAsSvg] = useState<string>()
+	const [modeler, setModeler] = useState<BpmnModeler<null>>()
 
 	function downloadDiagram() {
 		if (fileFormat === "xml") {
-			const element = document.createElement("a")
-			const file = new Blob([bpmnXml], { type: "text/xml" })
-			element.href = URL.createObjectURL(file)
-			element.download = `${diagramName}.bpmn`
-			document.body.appendChild(element) // Required for this to work in FireFox
-			element.click()
+			downloadXml()
 		}
-		if (fileFormat === "svg" && diagramAsSvg) {
+		if (fileFormat === "svg") {
+			downloadSvg()
+		}
+	}
+
+	function downloadXml() {
+		const element = document.createElement("a")
+		const file = new Blob([bpmnXml], { type: "text/xml" })
+		element.href = URL.createObjectURL(file)
+		element.download = `${diagramName}.bpmn`
+		document.body.appendChild(element) // Required for this to work in FireFox
+		element.click()
+	}
+
+	async function downloadSvg() {
+		if (modeler) {
+			const { svg } = await modeler.saveSVG()
 			const element = document.createElement("a")
-			//const file = new Blob([diagramAsSvg], { type: "image/svg" })
-			var encodedData = encodeURIComponent(diagramAsSvg)
+			var encodedData = encodeURIComponent(svg)
 			element.href = "data:application/bpmn20-xml;charset=UTF-8," + encodedData
 			element.download = `${diagramName}.svg`
 			document.body.appendChild(element) // Required for this to work in FireFox
 			element.click()
 		}
 	}
+
 	return (
 		<>
 			<header className=' top-0 bg-slate-100'>
@@ -66,7 +78,7 @@ export default function Home() {
 							<>
 								<BpmnCanvas
 									bpmnXML={bpmnXml}
-									setDiagramAsSvg={setDiagramAsSvg}></BpmnCanvas>
+									setModeler={setModeler}></BpmnCanvas>
 								<div className=' mt-4 flex gap-2 justify-end'>
 									<Sheet>
 										<SheetTrigger asChild>

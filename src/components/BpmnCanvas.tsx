@@ -10,7 +10,7 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css"
 
 type BpmnCanvas = {
 	bpmnXML: string
-	setDiagramAsSvg: Dispatch<SetStateAction<string | undefined>>
+	setModeler: Dispatch<SetStateAction<BpmnModeler<null> | undefined>>
 }
 
 interface Canvas {
@@ -21,7 +21,7 @@ interface Canvas {
 	// Add other methods as needed
 }
 
-function BpmnCanvas({ bpmnXML, setDiagramAsSvg }: BpmnCanvas) {
+function BpmnCanvas({ bpmnXML, setModeler }: BpmnCanvas) {
 	const divRef = useRef<HTMLDivElement>(null)
 	const viewerRef = useRef<BpmnViewer | null>(null)
 
@@ -34,18 +34,19 @@ function BpmnCanvas({ bpmnXML, setDiagramAsSvg }: BpmnCanvas) {
 					bindTo: window,
 				},
 			})
+			setModeler(modeler)
 			viewerRef.current = modeler
 
 			if (bpmnXML.length !== 0) {
 				const importDiagramm = async () => {
-					console.log("BPMN XML:", bpmnXML) // Log the XML to check content
-					// import diagram
 					try {
-						await modeler.importXML(bpmnXML)
+						const responseImportXML = await modeler.importXML(bpmnXML)
+						console.log(
+							"🚀 ~ importDiagramm ~ responseImportXML:",
+							responseImportXML
+						)
 						const canvas = modeler.get("canvas") as Canvas
 						canvas.zoom("fit-viewport")
-						const { svg } = await modeler.saveSVG()
-						setDiagramAsSvg(svg)
 					} catch (err) {
 						console.log("🚀 ~ importDiagramm ~ err:", err)
 					}

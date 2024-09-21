@@ -9,7 +9,7 @@ import React, {
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button"
-import { Loader2 } from "lucide-react"
+import { Loader2, WandSparkles } from "lucide-react"
 import { Label } from "./ui/label"
 
 type ProcessFormProps = {
@@ -81,7 +81,10 @@ function ProcessForm({ setBpmnXml }: ProcessFormProps) {
 							Please wait{" "}
 						</>
 					) : (
-						"Generate"
+						<div className='flex gap-2'>
+							<WandSparkles />
+							<span>{"Generate"}</span>
+						</div>
 					)}
 				</Button>
 			</div>
