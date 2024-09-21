@@ -27,7 +27,52 @@ docker run -e OPENAI_API_KEY={your-api-key} -p 3000:3000 ghcr.io/lkmnch/text2bpm
    
 3) The Description is send to the LLM as part of a Prompt which returns a JSON including the Events, Tasks, Gateways and Sequence Flows of the Process.
    
-   ![image](https://github.com/user-attachments/assets/5e2533db-f64b-4de2-a2d1-8630923e9513)
+```
+   jsonProcess: {
+  tasks: [
+    { id: 'task_1', name: 'Clerk decides on shipment type' },
+    { id: 'task_2', name: 'Warehouse worker packages goods' },
+    { id: 'task_3', name: 'Request quotes from carriers' },
+    ...
+  ],
+  gateways: [
+    {
+      id: 'gateway_1',
+      name: 'Parallel Gateway',
+      type: 'parallelGateway'
+    },
+    {
+      id: 'gateway_2',
+      name: 'Exclusive Gateway (mode of delivery)',
+      type: 'exclusiveGateway'
+    },
+    ...
+  ],
+  start_events: [ { id: 'start_1', name: 'Goods to ship' } ],
+  end_events: [ { id: 'end_1', name: 'Goods available for pick' } ],
+  sequence_flows: [
+    {
+      id: 'flow_1',
+      sourceRef: 'start_1',
+      targetRef: 'gateway_1',
+      name: ''
+    },
+    {
+      id: 'flow_2',
+      sourceRef: 'gateway_1',
+      targetRef: 'task_1',
+      name: ''
+    },
+    {
+      id: 'flow_3',
+      sourceRef: 'gateway_1',
+      targetRef: 'task_2',
+      name: ''
+    },
+   ...
+  ]
+}
+```
 
 5) The Process is then showen in the bpmnjs Editor, where you can refine the Diagram.
    
