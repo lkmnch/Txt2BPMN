@@ -7,6 +7,9 @@ This is a Tool to generate bpmn-diagrams from business process descriptions with
 3) Export Diagrams as SVG or as bpmn-file
 
 ## How to use the app with Docker:
+
+(You will need an open ai api key and docker installed)
+
 1. Pull the image from GitHub Container Registry:
 ```
 docker pull ghcr.io/lkmnch/text2bpmn:latest
